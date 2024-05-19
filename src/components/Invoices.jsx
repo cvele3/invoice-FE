@@ -13,19 +13,19 @@ const Invoices = () => {
     }
 
     const invoices = [
-        { id: 1, totalPrice: 100, owner: 'John Doe', downloadLink: '#' },
-        { id: 2, totalPrice: 200, owner: 'Jane Doe', downloadLink: '#' },
+        { id: 1, totalPrice: 100, owner: 'John Smith', downloadLink: '#' },
+        { id: 2, totalPrice: 200, owner: 'John Smith', downloadLink: '#' },
         { id: 3, totalPrice: 300, owner: 'John Smith', downloadLink: '#' },
-        { id: 4, totalPrice: 400, owner: 'Jane Smith', downloadLink: '#' },
-        { id: 5, totalPrice: 500, owner: 'John Doe', downloadLink: '#' },
-        { id: 6, totalPrice: 600, owner: 'Jane Doe', downloadLink: '#' },
+        { id: 4, totalPrice: 400, owner: 'John Smith', downloadLink: '#' },
+        { id: 5, totalPrice: 500, owner: 'John Smith', downloadLink: '#' },
+        { id: 6, totalPrice: 600, owner: 'John Smith', downloadLink: '#' },
         { id: 7, totalPrice: 700, owner: 'John Smith', downloadLink: '#' },
-        { id: 8, totalPrice: 800, owner: 'Jane Smith', downloadLink: '#' },
-        { id: 9, totalPrice: 900, owner: 'John Doe', downloadLink: '#' },
-        { id: 10, totalPrice: 1000, owner: 'Jane Doe', downloadLink: '#' },
+        { id: 8, totalPrice: 800, owner: 'John Smith', downloadLink: '#' },
+        { id: 9, totalPrice: 900, owner: 'John Smith', downloadLink: '#' },
+        { id: 10, totalPrice: 1000, owner: 'John Smith', downloadLink: '#' },
         { id: 11, totalPrice: 1100, owner: 'John Smith', downloadLink: '#' },
-        { id: 12, totalPrice: 1200, owner: 'Jane Smith', downloadLink: '#' },
-        { id: 13, totalPrice: 1300, owner: 'John Doe', downloadLink: '#' }
+        { id: 12, totalPrice: 1200, owner: 'John Smith', downloadLink: '#' },
+        { id: 13, totalPrice: 1300, owner: 'John Smith', downloadLink: '#' }
         // Add more dummy data here
     ];
 
