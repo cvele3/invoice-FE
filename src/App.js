@@ -8,9 +8,9 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-200 text-center">
       <main className="flex-grow">
-        {/* < ShowInvoices /> */}
+        < ShowInvoices />
         {/* < Login /> */}
-        < Registration />
+        {/* < Registration /> */}
       </main>
     </div>
   );
