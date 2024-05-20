@@ -1,15 +1,25 @@
 import React, { useState } from "react";
+import { register } from "../api";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
     const [fullName, setFullName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const submitRegistration = (e) => {
+    const navigate = useNavigate();
+
+    const submitRegistration = async (e) => {
         e.preventDefault();
-        console.log("Full Name:", fullName);
-        console.log("Username:", username);
-        console.log("Password:", password);
+        try {
+            const response = await register(username, password, fullName);
+            console.log(response);
+            navigate('/login');
+        } catch (error) {
+            toast.error('User already exists', { autoClose: 2000 });
+        }
     }
 
     return (

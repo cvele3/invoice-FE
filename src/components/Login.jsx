@@ -1,13 +1,28 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { login } from '../api';
+import { toast } from "react-toastify";
+
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const submitLogin = (e) => {
+    const navigate = useNavigate();
+
+    const submitLogin = async (e) => {
         e.preventDefault();
-        console.log("Username:", username);
-        console.log("Password:", password);
+        try {
+            const response = await login(username, password);
+            console.log(response.token);
+            navigate('/invoices');
+        } catch (error) {
+            toast.error('Check your credentials, or create account', { autoClose: 2000 });
+        }
+    }
+
+    const goToRegistration = () => {
+        navigate('/register');
     }
 
     return (
@@ -27,9 +42,9 @@ const Login = () => {
                         <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="flex flex-col items-center justify-between">
-                        <a className="inline-block align-baseline font-bold text-sm text-purple-500 hover:text-purple-800 mb-5" href="/register">
+                        <button onClick={goToRegistration} className="inline-block align-baseline font-bold text-sm text-purple-500 hover:text-purple-800 mb-5">
                             Not a user? Register now!
-                        </a>
+                        </button>
                         <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={submitLogin}>
                             Login
                         </button>

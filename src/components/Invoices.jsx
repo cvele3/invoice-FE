@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreateInvoice from './CreateInvoice';
+import { getAllInvoicesByUser, getInvoiceById } from '../api';
+import { utils, writeFile } from 'xlsx';
 
 const Invoices = () => {
     const [isCreating, setIsCreating] = useState(false);
+    const [invoices, setInvoices] = useState([]);
 
     const startCreating = () => {
         setIsCreating(true);
@@ -12,22 +15,46 @@ const Invoices = () => {
         setIsCreating(false);
     }
 
-    const invoices = [
-        { id: 1, totalPrice: 100, owner: 'John Smith', downloadLink: '#' },
-        { id: 2, totalPrice: 200, owner: 'John Smith', downloadLink: '#' },
-        { id: 3, totalPrice: 300, owner: 'John Smith', downloadLink: '#' },
-        { id: 4, totalPrice: 400, owner: 'John Smith', downloadLink: '#' },
-        { id: 5, totalPrice: 500, owner: 'John Smith', downloadLink: '#' },
-        { id: 6, totalPrice: 600, owner: 'John Smith', downloadLink: '#' },
-        { id: 7, totalPrice: 700, owner: 'John Smith', downloadLink: '#' },
-        { id: 8, totalPrice: 800, owner: 'John Smith', downloadLink: '#' },
-        { id: 9, totalPrice: 900, owner: 'John Smith', downloadLink: '#' },
-        { id: 10, totalPrice: 1000, owner: 'John Smith', downloadLink: '#' },
-        { id: 11, totalPrice: 1100, owner: 'John Smith', downloadLink: '#' },
-        { id: 12, totalPrice: 1200, owner: 'John Smith', downloadLink: '#' },
-        { id: 13, totalPrice: 1300, owner: 'John Smith', downloadLink: '#' }
-        // Add more dummy data here
-    ];
+    const downloadInvoice = async (invoiceId) => {
+        try {
+            const invoice = await getInvoiceById(invoiceId);
+            const newInvoice = {
+                id: invoice.id,
+                invoiceDate: invoice.invoiceDate,
+                invoiceNumber: invoice.invoiceNumber,
+                invoiceAmount: invoice.invoiceAmount,
+                customerUsername: invoice.customerUsername,
+                paymentType: invoice.paymentType.type
+            };
+            const ws = utils.json_to_sheet([newInvoice]);
+            const wb = utils.book_new();
+            utils.book_append_sheet(wb, ws, "Invoice");
+            writeFile(wb, `invoice_${invoiceId}.xlsx`);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        const fetchInvoices = async () => {
+            const username = localStorage.getItem('username');
+            if (username) {
+                try {
+                    const response = await getAllInvoicesByUser(username);
+                    const invoices = response.map(invoice => ({
+                        id: invoice.id,
+                        totalPrice: invoice.invoiceAmount,
+                        owner: invoice.customerUsername
+                    }));
+                    setInvoices(invoices);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        };
+
+        fetchInvoices();
+    }, []);
 
 
     return (
@@ -60,7 +87,7 @@ const Invoices = () => {
                             <td className="border-2 border-gray-500 px-4 py-2">{invoice.totalPrice} €</td>
                             <td className="border-2 border-gray-500 px-4 py-2">{invoice.owner}</td>
                             <td className="border-2 border-gray-500 px-4 py-2">
-                                <button onClick={() => window.location.href = invoice.downloadLink} className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                                <button onClick={() => downloadInvoice(invoice.id)} className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
                                     Download
                                 </button>
                             </td>
