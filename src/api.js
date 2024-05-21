@@ -77,3 +77,64 @@ export const getInvoiceById = async (invoiceId) => {
         throw error;
     }
 };
+
+export const getAllProducts = async () => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_URL}/product/getAllProducts`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getAllPaymentTypes = async () => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_URL}/paymentType/getAllPaymentTypes`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const createInvoice = async (paymentId, products) => {
+    try {
+        const username = localStorage.getItem('username');
+        const token = localStorage.getItem('token');
+        console.log({
+            paymentTypeId: Number(paymentId),
+            products: products,
+            customerUsername: username
+        });
+        const response = await axios.post(`${API_URL}/invoice/createInvoice`, {
+            paymentTypeId: Number(paymentId),
+            products: products,
+            customerUsername: username
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            throw new Error(response.data.message);
+        }
+    } catch (error) {
+        throw error;
+    }
+};

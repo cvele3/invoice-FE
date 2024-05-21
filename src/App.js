@@ -5,6 +5,7 @@ import Registration from './components/Registration';
 import Login from './components/Login';
 import ShowInvoices from './pages/ShowInvoices';
 import { ToastContainer } from 'react-toastify';
+import ShowItems from './pages/ShowItems';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/invoices" element={<ShowInvoices />} />
+            <Route path="/items" element={<ShowItems />} />
           </Routes>
           <ToastContainer />
         </main>
