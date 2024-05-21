@@ -35,7 +35,7 @@ const Items = () => {
                         <tr key={index}>
                             <td className="border-2 border-gray-500 px-4 py-2">{item.id}</td>
                             <td className="border-2 border-gray-500 px-4 py-2">{item.name}</td>
-                            <td className="border-2 border-gray-500 px-4 py-2">{item.price}</td>
+                            <td className="border-2 border-gray-500 px-4 py-2">{item.price} €</td>
                         </tr>
                     ))}
                 </tbody>
